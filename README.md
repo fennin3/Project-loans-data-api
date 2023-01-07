@@ -1,0 +1,47 @@
+# Project Loans Data API
+Test Task
+
+## Problem Description
+Develop a simple Django REST API that will have endpoints to get the data from a site
+
+## Endpoints
+* /api/countries - return the list of countries
+* /api/sectors - return the list of sectors
+* /api/projects - return the list of projects’ titles
+* /api/loans - return the list of loans (basically that table but in JSON format)
+
+
+## Technologies Used
+* Python
+    - Django
+    - Django Rest Framework
+    - Selenium
+* SQLite
+* Docker
+* Chrome Browser
+* Chrome Driver
+
+## Architectural Consideration
+1. All the fields of the ```Loan``` model are charfields with ```max_length``` of 255 to accomodate the the scraped data easily.
+
+## Setup Instructions
+To run this project
+1. Clone project
+2. Download and install docker
+2. Build and run docker container with a single command: 
+```
+docker-compose up —build
+```
+
+## Running migrations
+Open a new terminal and run:
+```
+docker ps
+docker exec -it <CONTAINER_NAME> bash
+python manage.py makemigrations loan_app
+python manage.py migrate
+```
+## Running script to pull data and popuplate the database(run in the container's bash terminal)
+```
+python populate_data.py
+```
