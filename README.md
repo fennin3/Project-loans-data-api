@@ -2,7 +2,7 @@
 Test Task
 
 ## Problem Description
-Develop a simple Django REST API that will have endpoints to get the data from a site
+Develop a simple Django REST API that will have endpoints to get the data collected from an external source
 
 ## Endpoints
 * /api/countries - return the list of countries
