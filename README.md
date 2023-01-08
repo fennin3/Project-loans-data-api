@@ -27,8 +27,9 @@ Develop a simple Django REST API that will have endpoints to get the data collec
 ## Setup Instructions
 To run this project
 1. Clone project
-2. Download and install docker
-2. Build and run docker container with a single command: 
+2. Create .env file in the root directory of the project to store your SECRET_KEY. The file must contain this ```SECRET_KEY=your-secret-key```
+3. Download and install docker
+4. Build and run docker container with a single command: 
 ```
 docker-compose up —build
 ```
