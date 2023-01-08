@@ -2,7 +2,6 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
 import time
 import django
 
@@ -11,19 +10,23 @@ django.setup()
 
 from loan_app.models import Loan
 
-
-
+# Using selenium to scrape 100 rows of the table data
 def scrape_data():
     print("\nScraping 100 rows of data...")
     time.sleep(10)
     global driver
+    
+    # setting the pagination of the page to 100 items per page
     select = Select(driver.find_element(By.XPATH,'//select[@id="show-entries"]'))
     select.select_by_value('100')
     time.sleep(10)
+    
+    # collecting the list of table rows
     table_data = driver.find_elements(By.XPATH,"//div/article")
     print("Scraping Done --> 100%\n")
     return table_data
 
+# Processing the collected data into list if dictionaries
 def process_table_data(table_data):
     print("Data Processing...")
     del table_data[0]
@@ -44,6 +47,7 @@ def process_table_data(table_data):
     print("Data Processing Done --> 100%\n")
     return processed_dataset
 
+# Creating database records from the list of dictionaries
 def populate_database(dataset):
     print("Populating Database...")
     db_objects = []
@@ -53,12 +57,8 @@ def populate_database(dataset):
     Loan.objects.bulk_create(db_objects)
     print("Done --> 100%")
 
+
 if __name__ == "__main__":
-    # options = Options()
-    # options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    
-    # chromedriver_path = "C:/Users/Francis/Desktop/chromedriver.exe"
-    # driver =  webdriver.Chrome(chromedriver_path,chrome_options=options)
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--window-size=1920,1080')
@@ -66,8 +66,6 @@ if __name__ == "__main__":
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-dev-shm-usage')        
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    
-    
     
     url = "https://www.eib.org/en/projects/loans/index.htm"
     driver.get(url)
