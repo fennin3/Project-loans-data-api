@@ -23,8 +23,6 @@ Develop a simple Django REST API that will have endpoints to get the data collec
 * Chrome Browser
 * Chrome Driver
 
-## Architectural Consideration
-1. All the fields of the ```Loan``` model are charfields with ```max_length``` of 255 to accomodate the the scraped data easily.
 
 ## Setup Instructions
 To run this project
