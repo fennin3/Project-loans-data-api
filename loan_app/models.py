@@ -6,8 +6,8 @@ class Loan(models.Model):
     title = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     sector = models.CharField(max_length=255)
-    signed_amount = models.CharField(max_length=255)
-    signature_date = models.CharField(max_length=255)
+    signed_amount = models.DecimalField(max_digits=11, decimal_places=2)
+    signature_date = models.DateField()
     
     def __str__(self):
         return self.title
