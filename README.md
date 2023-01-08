@@ -10,6 +10,7 @@ Develop a simple Django REST API that will have endpoints to get the data collec
 * /api/projects - return the list of projects’ titles
 * /api/loans - return the list of loans (basically that table but in JSON format)
 * /docs/ - API Documentation
+* /playground/ - API Documentation 
 
 
 ## Technologies Used
