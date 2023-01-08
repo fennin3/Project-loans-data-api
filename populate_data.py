@@ -4,6 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
 import django
+from datetime import datetime
+from decimal import Decimal
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','loan_data_project.settings')
 django.setup()
@@ -36,12 +39,16 @@ def process_table_data(table_data):
     
     for row in table_data:
         row_data = str(row.text).split('\n')
+        #converting str to date format
+        formatted_date = datetime.strptime(row_data[0], "%d %B %Y") 
+        # Converting the comma separated numbers into decimal with 2 decimal places
+        formatted_amount = Decimal(str(row_data[4]).replace('€','').replace(',','')) 
         row_data = {
-            "signature_date":row_data[0],
+            "signature_date":formatted_date,
             "title":row_data[1],
             "country":row_data[2],
             "sector":row_data[3],
-            "signed_amount":row_data[4]
+            "signed_amount":formatted_amount
         }
         processed_dataset.append(row_data)
     print("Data Processing Done --> 100%\n")
