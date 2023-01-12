@@ -53,33 +53,24 @@ def process_table_data(table_data):
 # Creating database records from the list of dictionaries
 def populate_database(dataset):
     print("Populating Database...")
-    countries = []
-    sectors = []
-    currencies = []
 
-    for country in set([data["country"] for data in dataset]):
-        countries.append(Country(name=country))
-
-    for sector in set([data["sector"] for data in dataset]):
-        sectors.append(Sector(name=sector))
-
-    for currency in set([data["currency"] for data in dataset]):
-        currencies.append(Currency(symbol=currency))
-
-    Country.objects.bulk_create(countries)
-    Sector.objects.bulk_create(sectors)
-    Currency.objects.bulk_create(currencies)
-    
     loan_objs = []
     for data in dataset:
+
+        """Checking to see if objects exist in the database: if exists, they are retrieved else
+        they are created"""
+        currency, _ = Currency.objects.get_or_create(symbol=data["currency"])
+        sector, _ = Sector.objects.get_or_create(name=data["sector"])
+        country, _ = Country.objects.get_or_create(name=data["country"])
+
         loan_objs.append(
             Loan(
                 title=data["title"],
                 signature_date=data["signature_date"],
                 signed_amount=data["signed_amount"],
-                sector=Sector.objects.get(name=data["sector"]),
-                country=Country.objects.get(name=data["country"]),
-                currency=Currency.objects.get(symbol=data["currency"]),
+                sector=sector,
+                country=country,
+                currency=currency,
             )
         )
 
