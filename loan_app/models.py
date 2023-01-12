@@ -23,10 +23,12 @@ class Sector(models.Model):
 
 class Currency(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255,default="Euro")
+    code = models.CharField(max_length=255,default='eur')
     symbol = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.symbol
+        return self.name
 
     class Meta:
         verbose_name_plural = "Currencies"
