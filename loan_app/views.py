@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.http import HttpResponse
-from django.db.models import Sum, Count, Avg
+from django.db.models import Sum, Count
 
 from .models import Loan, Sector, Country
 from .serializers import LoanSerializer
