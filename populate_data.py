@@ -29,9 +29,9 @@ def process_table_data(table_data):
         """
         row_data = str(row.text).split("\n")
         # converting str to date format
-        formatted_date = datetime.strptime(row_data[0].strip(), "%d %B %Y")
+        formatted_date = datetime.strptime(row_data[0], "%d %B %Y")
         # Removing the currency symbol the prefix the text
-        amount = Decimal(str(row_data[4][1:]).strip().replace(",", ""))
+        amount = Decimal(str(row_data[4][1:]).replace(",", ""))
         # Slicing the first character (the currency symbol)
         currency = row_data[4][0]
 
@@ -39,7 +39,7 @@ def process_table_data(table_data):
             {
                 "signature_date": formatted_date,
                 "title": row_data[1],
-                "country": row_data[2].strip(),
+                "country": row_data[2],
                 "sector": row_data[3],
                 "signed_amount": amount,
                 "currency": currency,
@@ -69,8 +69,8 @@ def populate_database(dataset):
     Country.objects.bulk_create(countries)
     Sector.objects.bulk_create(sectors)
     Currency.objects.bulk_create(currencies)
+    
     loan_objs = []
-
     for data in dataset:
         loan_objs.append(
             Loan(
