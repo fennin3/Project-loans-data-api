@@ -1,22 +1,26 @@
 from django.test import TestCase
-from loan_app.models import Loan
+from loan_app.models import Loan, Country, Sector, Currency
+
+from decimal import Decimal
+
 
 class TestLoanAppModels(TestCase):
-    
     def test_loan_model_fields(self):
+        country = Country.objects.create(name=f"USA")
+        currency = Currency.objects.create(symbol="$")
+        sector = Sector.objects.create(name="Health")
         test_loan = Loan.objects.create(
-            signature_date='12-04-2021',
+            signature_date="2021-12-04",
             title=f"Loan Title atm",
-            country=f"Germany",
-            sector=f"Sector ABC",
-            signed_amount="3509"
+            country=country,
+            sector=sector,
+            currency=currency,
+            signed_amount="3509",
         )
-        
-        load = Loan.objects.first()
-        
-        self.assertEqual(load.title,test_loan.title)
-        self.assertEqual(load.sector,test_loan.sector)
-        self.assertEqual(load.country,test_loan.country)
-        self.assertEqual(load.signature_date,test_loan.signature_date)
-        self.assertEqual(load.signed_amount,test_loan.signed_amount)
-        
+
+        loan = Loan.objects.first()
+
+        self.assertEqual(loan.title, test_loan.title)
+        self.assertEqual(loan.sector, sector)
+        self.assertEqual(loan.country, country)
+        self.assertEqual(loan.signed_amount, Decimal(test_loan.signed_amount))
